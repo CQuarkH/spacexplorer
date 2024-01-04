@@ -5,6 +5,11 @@
 ## Description
 SpaceXplorer is an application that leverages the SpaceX API to provide detailed and up-to-date information on SpaceX launches, rockets, and launchpads. This application is developed using [Astro](https://astro.build/), hydrating certain components from [React](https://reactjs.org/), and utilizes [Tailwind CSS](https://tailwindcss.com/) for styling, offering a rich and interactive user experience.
 
+## Website
+The SpaceXplorer site is currently deployed on [Vercel](https://vercel.com/). Visit the live site to explore features and interact with the application.
+
+[Visit SpaceXplorer](https://your-vercel-deployed-site.com)
+
 ## Features
 - **Launch Information:** Display the latest and upcoming launches with details such as date, launch vehicle, payload, and more.
 - **Rockets:** Explore the various rockets used in SpaceX missions, including their specifications and history.
@@ -13,6 +18,7 @@ SpaceXplorer is an application that leverages the SpaceX API to provide detailed
 ## Technologies Used
 - **[Astro](https://astro.build/):** For building a fast and modern user experience.
 - **[React](https://reactjs.org/):** Used to hydrate certain interactive components.
+- **[TypeScript](https://www.typescriptlang.org/):** A superset of JavaScript providing static types, used to ensure a more robust and maintainable codebase.
 - **[Tailwind CSS](https://tailwindcss.com/):** For efficient and responsive styling.
 
 ## Educational Purpose
