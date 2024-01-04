@@ -1,54 +1,26 @@
-# Astro Starter Kit: Basics
+# SpaceXplorer
 
-```sh
-npm create astro@latest -- --template basics
-```
+![image](https://github.com/CQuarkH/spacexplorer/assets/109247730/b3b2adc2-f7e8-4347-8074-d097e52d13ae)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Description
+SpaceXplorer is an application that leverages the SpaceX API to provide detailed and up-to-date information on SpaceX launches, rockets, and launchpads. This application is developed using [Astro](https://astro.build/), hydrating certain components from [React](https://reactjs.org/), and utilizes [Tailwind CSS](https://tailwindcss.com/) for styling, offering a rich and interactive user experience.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Features
+- **Launch Information:** Display the latest and upcoming launches with details such as date, launch vehicle, payload, and more.
+- **Rockets:** Explore the various rockets used in SpaceX missions, including their specifications and history.
+- **Launchpads:** Detailed view of the different launch sites with relevant information and history.
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## Technologies Used
+- **[Astro](https://astro.build/):** For building a fast and modern user experience.
+- **[React](https://reactjs.org/):** Used to hydrate certain interactive components.
+- **[Tailwind CSS](https://tailwindcss.com/):** For efficient and responsive styling.
 
-## 🚀 Project Structure
+## Educational Purpose
+This project is for educational purposes only, aiming to demonstrate web development skills and integration with real-world APIs. It is based on the [SpaceX API](https://github.com/r-spacex/SpaceX-API) for fetching and displaying data related to SpaceX's space missions.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Installation
+Follow these steps to install and run the project locally:
+1. Clone the repository
+2. Install dependencies (`npm install`)
+3. 4. Run the application: (`npm run dev`)
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
