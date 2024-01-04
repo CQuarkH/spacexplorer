@@ -1,0 +1,33 @@
+<div id="dynamic-page">
+  <slot />
+</div>
+
+<style>
+  #dynamic-page {
+    min-height: 100%;
+    display: grid;
+    flex: 1;
+    grid-template-areas:
+      "header header"
+      "left right"
+      "desc desc"
+      "media media";
+    grid-template-rows: 200px 685px 300px 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 700px) {
+    #dynamic-page {
+      grid-template-areas:
+        "header"
+        "left"
+        "right"
+        "desc"
+        "media";
+
+      grid-template-rows: 200px 500px 500px 300px 1fr;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+  }
+</style>

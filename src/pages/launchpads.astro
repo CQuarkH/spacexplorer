@@ -1,0 +1,48 @@
+---
+import ScaleEffectImage from "../components/shared/ScaleEffectImage.astro";
+import Layout from "../layouts/Layout.astro";
+import { fetchLaunchpads } from "../services/spaceXService";
+
+const launchpads = await fetchLaunchpads();
+
+console.log(launchpads.length);
+---
+
+<Layout title="Launchpads">
+  <div class="flex flex-col gap-2">
+    <h2 class="flex text-lg font-bold text-zinc-300 w-full">
+      SpaceX Launchpads
+    </h2>
+    <p class="text-zinc-500 p-2">
+      Where dreams ascend: The starting point of voyages beyond.
+    </p>
+  </div>
+
+  <div id="launchpads-grid">
+    {
+      launchpads.map((launchpad) => (
+        <picture class="w-full md:h-[600px] h-[450px]">
+          <ScaleEffectImage
+            imageUrl={launchpad.imageUrl}
+            bottomText={launchpad.name}
+            link={`/launchpads/${launchpad.launchpadID}`}
+          />
+        </picture>
+      ))
+    }
+  </div>
+</Layout>
+
+<style>
+  #launchpads-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 16px;
+  }
+
+  @media (max-width: 700px) {
+    #launchpads-grid {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+  }
+</style>

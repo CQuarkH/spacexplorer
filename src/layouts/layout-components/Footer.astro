@@ -1,0 +1,22 @@
+---
+import CustomIcon from "../../components/shared/CustomIcon.astro";
+---
+
+<footer
+  class="mt-10 w-full h-auto p-6 gap-4 flex md:flex-row flex-col bg-black justify-between text-zinc-300 items-center"
+>
+  <p class="text-sm flex items-center">
+    Created by <span class="text-orange-400 mx-2">C_Quark</span> | <CustomIcon
+      name="mdi:github"
+      className="ml-2 hover:text-white transition-all duration-300"
+      link="https://github.com/CQuarkH"
+    />
+  </p>
+  <p class="text-xs">
+    This project is for educational purposes only and is not affiliated with
+    SpaceX. Data provided by the <a
+      href="https://docs.spacexdata.com/"
+      class="text-blue-300">SpaceX API</a
+    >.
+  </p>
+</footer>

@@ -1,0 +1,95 @@
+---
+import type { GetStaticPaths } from "astro";
+import DynamicLayout from "../../layouts/DynamicLayout.astro";
+import { formatToReadableDate } from "../../common/utils";
+import Layout from "../../layouts/Layout.astro";
+import {
+  fetchLaunchByID,
+  fetchLaunchpadByID,
+  fetchRocketByID,
+  fetchLaunches,
+} from "../../services/spaceXService";
+import MediaGallery from "../../components/launches/MediaGallery.astro";
+import ScaleEffectImage from "../../components/shared/ScaleEffectImage.astro";
+
+const { launchID } = Astro.params;
+
+export const getStaticPaths = (async () => {
+  const launches = await fetchLaunches();
+
+  return launches.map((launch) => ({ params: { launchID: launch.launchID } }));
+}) satisfies GetStaticPaths;
+
+const launch = await fetchLaunchByID(launchID!);
+const launchpad = await fetchLaunchpadByID(launch.launchpadID);
+const rocket = await fetchRocketByID(launch.rocketID);
+---
+
+<Layout title="Launch Details">
+  <DynamicLayout>
+    <!-- header -->
+    <div class="[grid-area:header] flex justify-between items-start">
+      <div class="flex flex-col gap-3">
+        <h1
+          transition:name={`launch-title-${launch.launchID}`}
+          class="text-2xl text-zinc-200 font-bold"
+        >
+          {launch.missionName}
+        </h1>
+        <time class="block mb-2 text-sm font-normal leading-none text-gray-500">
+          {formatToReadableDate(launch.launchDate.toString())}
+        </time>
+
+        <div class="flex gap-4">
+          <h3 class="text-zinc-300">Status:</h3>
+          <span
+            class={`text-sm font-medium me-2 px-2.5 py-0.5 rounded ${
+              launch.launchSuccess ? "bg-green-400" : "bg-red-400"
+            } text-black`}>{launch.launchSuccess ? "Succeeded" : "Failed"}</span
+          >
+        </div>
+
+        <div class="flex gap-4">
+          <h3 class="text-zinc-300">Flight Number:</h3>
+          <h3 class="text-yellow-500 font-semibold">
+            {launch.flightNumber}
+          </h3>
+        </div>
+      </div>
+      <img
+        src={launch.thumbnailUrl}
+        class="w-[30%] h-auto md:w-auto md:h-full object-contain"
+      />
+    </div>
+
+    <div class="[grid-area:left] bg-gray-800/20 rounded-lg h-full w-full">
+      <ScaleEffectImage
+        imageUrl={launchpad.imageUrl}
+        title="Launchpad"
+        leadingIconName="fe:target"
+        bottomText={launchpad.name}
+        link={`/launchpads/${launchpad.launchpadID}`}
+      />
+    </div>
+
+    <div class="[grid-area:right] bg-gray-800/20 rounded-lg h-full w-full">
+      <ScaleEffectImage
+        imageUrl={rocket.flickrImages[0]}
+        title="Rocket"
+        leadingIconName="octicon:rocket-16"
+        bottomText={rocket.name}
+        link={`/vehicles/${rocket.rocketID}`}
+      />
+    </div>
+
+    <div class="[grid-area:desc] py-6 rounded-lg flex flex-col gap-4">
+      <h2 class="text-xl text-zinc-200 font-bold">Mission Details</h2>
+      <p class="text-zinc-400 overflow-y-auto">{launch.missionDescription}</p>
+    </div>
+
+    <MediaGallery
+      videoID={launch.mediaGallery.videoID}
+      images={launch.mediaGallery.images}
+    />
+  </DynamicLayout>
+</Layout>
