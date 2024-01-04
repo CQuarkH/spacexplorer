@@ -1,0 +1,76 @@
+---
+import CustomIcon from "./CustomIcon.astro";
+
+interface Props {
+  imageUrl: string;
+  title?: string;
+  leadingIconName?: string;
+  bottomText?: string;
+  link?: string;
+}
+
+const { imageUrl, title, leadingIconName, bottomText, link } =
+  Astro.props as Props;
+---
+
+{
+  link ? (
+    <a
+      href={link}
+      class="relative h-full w-full block overflow-hidden gap-4 p-4 rounded-lg opacity-90 hover:opacity-100 transition-all duration-500"
+    >
+      <img
+        src={imageUrl}
+        alt={`ScaleEffect Image`}
+        class="scale-image absolute inset-0 w-full h-full rounded-lg object-cover transition-all duration-500 hover:scale-110"
+      />
+      {title && (
+        <span class="scale-text absolute top-4 left-4 text-white text-lg font-bold z-20 transition-opacity duration-500">
+          <span class="flex gap-2 bg-gray-900 p-2 rounded-md">
+            {leadingIconName && (
+              <CustomIcon
+                className="text-green-400 flex"
+                size="24"
+                name={leadingIconName}
+              />
+            )}
+            <h2 class="text-zinc-300 text-lg font-bold flex">{title}</h2>
+          </span>
+        </span>
+      )}
+      {bottomText && (
+        <span class="scale-title p-2 bg-gray-900 rounded-md new-text absolute bottom-16 left-1/2 transform -translate-x-1/2 text-zinc-200 text-lg font-bold z-20 transition-opacity duration-500 opacity-100">
+          {bottomText}
+        </span>
+      )}
+    </a>
+  ) : (
+    <div class="relative h-full w-full block overflow-hidden gap-4 p-4 rounded-lg">
+      <img
+        src={imageUrl}
+        alt={`ScaleEffect Image`}
+        class="scale-image absolute inset-0 w-full h-full rounded-lg object-cover opacity-100 transition-transform duration-500 hover:scale-110"
+      />
+      {title && (
+        <span class="scale-text absolute top-4 left-4 text-white text-lg font-bold z-20 transition-opacity duration-500">
+          <span class="flex gap-2 bg-gray-900 p-2 rounded-md">
+            {leadingIconName && (
+              <CustomIcon
+                className="text-green-400 flex"
+                size="24"
+                name={leadingIconName}
+              />
+            )}
+            <h2 class="text-zinc-300 text-lg font-bold flex">{title}</h2>
+          </span>
+        </span>
+      )}
+
+      {bottomText && (
+        <span class="scale-title p-2 bg-gray-900 rounded-md new-text absolute bottom-16 left-1/2 transform -translate-x-1/2 text-zinc-200 text-lg font-bold z-20 transition-opacity duration-500 opacity-100">
+          {bottomText}
+        </span>
+      )}
+    </div>
+  )
+}

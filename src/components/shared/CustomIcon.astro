@@ -1,0 +1,29 @@
+---
+import { Icon } from "astro-icon";
+
+interface Props {
+  className?: string;
+  name: string;
+  size?: string;
+  link?: string;
+}
+
+const {
+  className = "text-zinc-300",
+  name,
+  size = "24",
+  link,
+} = Astro.props as Props;
+---
+
+{
+  link ? (
+    <a href={link} class={className}>
+      <Icon name={name} size={size} />
+    </a>
+  ) : (
+    <span class={className}>
+      <Icon name={name} size={size} />
+    </span>
+  )
+}

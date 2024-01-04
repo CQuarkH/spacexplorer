@@ -1,0 +1,31 @@
+---
+import type { Image } from "astro:assets";
+import { routes } from "../../models/routes.ts";
+import { fetchNextLaunch } from "../../services/spaceXService";
+import HamburgerMenu from "../../components/shared/react/HamburgerMenu.jsx";
+const pathname = new URL(Astro.request.url).pathname;
+---
+
+<header
+  class="flex justify-between items-center px-6 py-2 text-zinc-300 sticky h-20 w-full top-0 bg-[#0c0e11] z-30"
+>
+  <div class="flex">
+    <a href="/" class="text-xl font-bold">SpaceXplorer</a>
+  </div>
+  <nav class="hidden md:flex gap-8">
+    {
+      routes.map((route) => (
+        <a
+          href={route.path}
+          class={`${
+            pathname.includes(route.path) ? "text-zinc-200" : "text-zinc-400"
+          } transition duration-300 ease-in-out hover:text-zinc-200 font-bold`}
+        >
+          {route.name}
+        </a>
+      ))
+    }
+  </nav>
+
+  <HamburgerMenu client:visible />
+</header>

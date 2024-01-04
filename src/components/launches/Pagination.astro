@@ -1,0 +1,42 @@
+---
+import CustomIcon from "../shared/CustomIcon.astro";
+interface Props {
+  prevUrl: string;
+  currentPage: number;
+  nextUrl: string;
+}
+
+const { prevUrl, currentPage, nextUrl } = Astro.props as Props;
+---
+
+<nav class="flex justify-between p-4">
+  {
+    prevUrl ? (
+      <a href={prevUrl} class="flex">
+        <CustomIcon
+          name="ic:twotone-arrow-back-ios"
+          className="text-zinc-400 hover:text-zinc-200 transition-all"
+        />
+      </a>
+    ) : (
+      <span class="flex" />
+    )
+  }
+
+  <span class="flex">
+    <h2 class="text-xl text-zinc-300">{currentPage}</h2>
+  </span>
+
+  {
+    nextUrl ? (
+      <a href={nextUrl} class="flex">
+        <CustomIcon
+          name="ic:twotone-arrow-forward-ios"
+          className="text-zinc-400 hover:text-zinc-200 transition-all"
+        />
+      </a>
+    ) : (
+      <span class="flex" />
+    )
+  }
+</nav>

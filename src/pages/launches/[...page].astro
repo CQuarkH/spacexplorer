@@ -1,0 +1,37 @@
+---
+import type { GetStaticPaths } from "astro";
+import LaunchTile from "../../components/launches/LaunchTile.astro";
+import Layout from "../../layouts/Layout.astro";
+import { fetchLaunches } from "../../services/spaceXService";
+import type { Launch } from "../../models/launches/launch";
+import Pagination from "../../components/launches/Pagination.astro";
+
+export async function getStaticPaths({ paginate }: any) {
+  const launches = await fetchLaunches();
+
+  return paginate(launches, {
+    pageSize: 10,
+  });
+}
+
+const { page }: any = Astro.props;
+---
+
+<Layout title="Launches">
+  <div class="flex flex-col gap-2">
+    <h2 class="flex text-lg font-bold text-zinc-300 w-full">SpaceX Launches</h2>
+    <p class="text-zinc-500 p-2">Blast off: Witness the power of innovation.</p>
+  </div>
+  <div class="flex justify-center w-full h-full">
+    <ol
+      class="flex flex-col relative max-w-[100%] border-s border-gray-200 dark:border-gray-700"
+    >
+      {page.data.map((launch: Launch) => <LaunchTile launch={launch} />)}
+    </ol>
+  </div>
+  <Pagination
+    prevUrl={page.url.prev}
+    nextUrl={page.url.next}
+    currentPage={page.currentPage}
+  />
+</Layout>

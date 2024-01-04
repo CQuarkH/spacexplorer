@@ -1,0 +1,44 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { fetchRockets, fetchShips } from "../services/spaceXService";
+import ScaleEffectImage from "../components/shared/ScaleEffectImage.astro";
+
+const rockets = await fetchRockets();
+---
+
+<Layout title="Vehicles">
+  <div class="flex flex-col gap-2">
+    <h2 class="flex text-lg font-bold text-zinc-300 w-full">SpaceX Vehicles</h2>
+    <p class="text-zinc-500 p-2">
+      Explore the fleet: The heart of space exploration.
+    </p>
+  </div>
+
+  <div id="rockets-grid">
+    {
+      rockets.map((rocket) => (
+        <picture class="w-full md:h-[600px] h-[450px]">
+          <ScaleEffectImage
+            imageUrl={rocket.flickrImages[0]}
+            bottomText={rocket.name}
+            link={`/vehicles/${rocket.rocketID}`}
+          />
+        </picture>
+      ))
+    }
+  </div>
+</Layout>
+
+<style>
+  #rockets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 16px;
+  }
+
+  @media (max-width: 700px) {
+    #rockets-grid {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+  }
+</style>

@@ -1,0 +1,177 @@
+---
+import type { GetStaticPaths } from "astro";
+import DynamicLayout from "../../layouts/DynamicLayout.astro";
+import DetailSpan from "../../components/shared/DetailSpan.astro";
+import { fetchRocketByID, fetchRockets } from "../../services/spaceXService";
+import Layout from "../../layouts/Layout.astro";
+import {
+  capitalizeFirstLetter,
+  formatToReadableDate,
+} from "../../common/utils";
+import ScaleEffectImage from "../../components/shared/ScaleEffectImage.astro";
+
+const { vehicleID } = Astro.params;
+
+export const getStaticPaths = (async () => {
+  const rockets = await fetchRockets();
+
+  return rockets.map((rocket) => ({ params: { vehicleID: rocket.rocketID } }));
+}) satisfies GetStaticPaths;
+
+const rocket = await fetchRocketByID(vehicleID);
+---
+
+<Layout title="Rocket Details">
+  <DynamicLayout>
+    <div class="[grid-area:header] rounded-lg">
+      <div class="flex flex-col gap-3">
+        <h1 class="text-2xl text-zinc-200 font-bold">
+          {rocket.name}
+        </h1>
+        <time class="block mb-2 text-sm font-normal leading-none text-gray-500">
+          {formatToReadableDate(rocket.firstFlight.toString())} (First Flight)
+        </time>
+
+        <div class="flex gap-4">
+          <h3 class="text-zinc-400">Status:</h3>
+          <span
+            class={`text-sm font-medium me-2 px-2.5 py-0.5 rounded ${
+              rocket.active ? "bg-green-400" : "bg-red-400"
+            } text-black`}>{rocket.active ? "Active" : "Inactive"}</span
+          >
+        </div>
+
+        <div class="flex gap-4">
+          <h3 class="text-zinc-400">Company:</h3>
+          <h3 class="text-yellow-500 font-semibold">
+            {rocket.company}
+          </h3>
+        </div>
+
+        <div class="flex gap-4">
+          <h3 class="text-zinc-400">Country:</h3>
+          <h3 class="text-zinc-300 font-semibold">
+            {rocket.country}
+          </h3>
+        </div>
+      </div>
+    </div>
+    <div
+      class="[grid-area:left] bg-gray-800/20 rounded-lg relative block overflow-hidden"
+    >
+      <ScaleEffectImage imageUrl={rocket.flickrImages[0]} />
+    </div>
+    <div
+      class="[grid-area:right] bg-gray-800/20 rounded-lg p-4 flex flex-col gap-6"
+    >
+      <!-- Technical specs -->
+      <div class="flex flex-col gap-4">
+        <h3 class="text-zinc-200 font-bold flex">Technical Specifications</h3>
+        <!-- Performance -->
+        <div class="flex flex-col gap-2">
+          <DetailSpan
+            title="Height"
+            value={rocket.height.meters}
+            unit="mts."
+            colorClass="text-yellow-400"
+          />
+          <DetailSpan
+            title="Diameter"
+            value={rocket.diameter.meters}
+            unit="mts."
+            colorClass="text-yellow-400"
+          />
+
+          <DetailSpan
+            title="Mass"
+            value={rocket.mass.kg}
+            unit="kg."
+            colorClass="text-yellow-400"
+          />
+          <DetailSpan title="Stages" value={rocket.stages} />
+          <DetailSpan title="Boosters" value={rocket.boosters} />
+        </div>
+      </div>
+      <!-- Engines -->
+      <div class="flex flex-col gap-4">
+        <h3 class="text-zinc-200 font-bold flex">Performance</h3>
+        <div class="flex flex-col gap-2">
+          <DetailSpan
+            title="Cost per launch"
+            value={rocket.costPerLaunch}
+            unit="USD"
+            colorClass="text-green-400"
+          />
+
+          <DetailSpan
+            title="Success Rate"
+            value={rocket.successRatePercentage}
+            unit="%"
+          />
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <h3 class="text-zinc-200 font-bold flex">Engines</h3>
+        <div class="flex flex-col gap-2">
+          <DetailSpan
+            title="Number of Engines"
+            value={rocket.engines.number}
+            colorClass="text-yellow-400"
+          />
+
+          <DetailSpan
+            title="Engine Type"
+            value={capitalizeFirstLetter(rocket.engines.type)}
+          />
+
+          <DetailSpan
+            title="Propellants"
+            value={`${capitalizeFirstLetter(
+              rocket.engines.propellant_1
+            )}, ${capitalizeFirstLetter(rocket.engines.propellant_2)}`}
+          />
+        </div>
+      </div>
+    </div>
+    <div class="[grid-area:desc] rounded-lg py-6 flex flex-col gap-4">
+      <h2 class="text-xl text-zinc-200 font-bold">About</h2>
+      <p class="text-zinc-400 overflow-y-auto">{rocket.description}</p>
+    </div>
+
+    <div class="[grid-area:media] rounded-lg w-full flex flex-col gap-4">
+      <h2 class="text-xl text-zinc-200 font-bold">Media Gallery</h2>
+
+      <div id="media-gallery">
+        {
+          rocket.flickrImages.map((img) => (
+            <picture class="relative block overflow-hidden rounded-md">
+              <img
+                src={img}
+                class="object-cover h-full w-auto rounded-lg transition-transform duration-500 hover:scale-110"
+              />
+            </picture>
+          ))
+        }
+      </div>
+    </div>
+  </DynamicLayout>
+</Layout>
+
+<style>
+  #media-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+
+    gap: 16px;
+  }
+
+  @media (max-width: 700px) {
+    #media-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+      gap: 16px;
+    }
+  }
+</style>

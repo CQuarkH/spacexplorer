@@ -1,0 +1,79 @@
+---
+import { Icon } from "astro-icon";
+import { formatToReadableDate } from "../../common/utils";
+
+import type { Launch } from "../../models/launches/launch";
+
+interface Props {
+  launch: Launch;
+}
+
+const { launch } = Astro.props as Props;
+---
+
+<li class="flex justify-between mb-10 ms-6 slide-in">
+  <div class="flex flex-col gap-2 w-[70%]">
+    <span
+      class="absolute flex items-center bg-slate-900 text-zinc-200 justify-center w-8 h-8 p-1 rounded-full -start-10"
+    >
+      <Icon name="octicon:rocket-16" size="24" />
+    </span>
+    <span class="flex gap-2 flex-col md:flex-row md:py-0 py-2">
+      <h3
+        transition:name={`launch-title-${launch.launchID}`}
+        class="items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white truncate"
+      >
+        {launch.missionName}
+      </h3>
+
+      <span
+        class={`text-sm font-medium max-w-24 justify-center md:w-auto me-2 px-2.5 py-0.5 h-6 rounded flex items-center ${
+          launch.launchSuccess ? "bg-green-400" : "bg-red-400"
+        } text-black md:ms-3`}
+        >{launch.launchSuccess ? "Succeeded" : "Failed"}</span
+      >
+    </span>
+    <time
+      class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"
+      >{formatToReadableDate(launch.launchDate.toString())}</time
+    >
+    <p
+      class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400 truncate"
+    >
+      {launch.missionDescription}
+    </p>
+    <span class="flex">
+      <a
+        href={`/launches/${launch.launchID}`}
+        class="flex gap-2 p-2 bg-gray-800 rounded-lg justify-center items-center text-zinc-300 hover:bg-gray-700 transition-all ease-in-out duration-300"
+      >
+        <span>
+          <Icon name="gg:details-more" size="24" />
+        </span>
+        Launch Details
+      </a>
+    </span>
+  </div>
+
+  <picture class="w-28 h-auto aspect-square">
+    <img src={launch.thumbnailUrl} />
+  </picture>
+</li>
+
+<style>
+  .slide-in {
+    animation: slideIn 2.5s ease forwards;
+    animation-timeline: view();
+  }
+
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    30% {
+      opacity: 1;
+      transform: translateX(0px);
+    }
+  }
+</style>

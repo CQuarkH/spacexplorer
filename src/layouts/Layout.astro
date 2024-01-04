@@ -1,0 +1,84 @@
+---
+import Header from "./layout-components/Header.astro";
+import Footer from "./layout-components/Footer.astro";
+import { ViewTransitions } from "astro:transitions";
+
+interface Props {
+  title: string;
+  customID?: string;
+}
+
+const { title, customID } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <ViewTransitions />
+  </head>
+  <body class="min-h-[100vh] flex flex-col m-0">
+    <Header />
+    <main id={customID ?? "main"}>
+      <slot />
+    </main>
+    <Footer />
+
+    <style is:global>
+      ::-webkit-scrollbar {
+        background-color: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: #21252a;
+        border-radius: 4px;
+        width: 8px;
+      }
+      #main {
+        display: flex;
+        margin-top: 20px;
+        gap: 48px;
+        flex: 1;
+        min-height: 100%;
+        flex-direction: column;
+        width: 960px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+      }
+
+      @media (max-width: 960px) {
+        #main {
+          max-width: 90%;
+          padding: 10px;
+        }
+      }
+
+      html {
+        font-family: "Monaspace Krypton", system-ui, sans-serif;
+        background: #0c0e11;
+        background-size: 224px;
+      }
+
+      @font-face {
+        font-family: "Monaspace Krypton";
+        src: url("/fonts/MonaspaceKrypton-Regular.otf") format("otf");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Monaspace Neon";
+        src: url("/fonts/MonaspaceNeon-Regular.otf") format("otf");
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+  </body>
+</html>
