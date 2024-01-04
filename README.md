@@ -8,7 +8,7 @@ SpaceXplorer is an application that leverages the SpaceX API to provide detailed
 ## Website
 The SpaceXplorer site is currently deployed on [Vercel](https://vercel.com/). Visit the live site to explore features and interact with the application.
 
-[Visit SpaceXplorer](https://your-vercel-deployed-site.com)
+[Visit SpaceXplorer](https://spacexplorer-cyan.vercel.app/)
 
 ## Features
 - **Launch Information:** Display the latest and upcoming launches with details such as date, launch vehicle, payload, and more.
