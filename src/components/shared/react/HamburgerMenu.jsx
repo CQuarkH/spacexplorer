@@ -25,9 +25,10 @@ function HamburgerMenu() {
         } w-[200px] transition-transform duration-300 ease-in-out`}
       >
         {/* Contenido del Drawer */}
-        <nav className="flex flex-col gap-4">
+        <nav className="flex flex-col gap-4" key="hamburger-nav">
           {routes.map((route) => (
             <a
+              key={route.path}
               href={route.path}
               className={`transition duration-300 ease-in-out hover:text-zinc-200 font-bold`}
             >
